@@ -385,7 +385,7 @@ while ($image = $imageResult->fetch_assoc()) {
                         ',',
                         '.'
                     ) ?>
-
+                    đ
                 </div>
                 <hr>
 
