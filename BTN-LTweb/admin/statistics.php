@@ -7,11 +7,27 @@ $total_revenue = $conn->query("SELECT SUM(total_price) as total FROM orders WHER
 // Lấy tổng số lượng đơn hàng
 $total_orders = $conn->query("SELECT COUNT(*) as count FROM orders")->fetch_assoc()['count'];
 
-// Lấy tổng số khách hàng (role = 'user')
+// Lấy tổng số khách hàng 
 $total_customers = $conn->query("SELECT COUNT(*) as count FROM users WHERE role = 'user'")->fetch_assoc()['count'];
 
 // Lấy tổng số sản phẩm
 $total_products = $conn->query("SELECT COUNT(*) as count FROM products")->fetch_assoc()['count'];
+
+// Lấy số lượng đơn hàng theo từng trạng thái để làm biểu đồ tròn
+$status_counts = [
+    'completed' => 0,
+    'shipping' => 0,
+    'confirmed' => 0,
+    'cancelled' => 0,
+    'pending' => 0
+];
+
+$order_status_query = $conn->query("SELECT status, COUNT(*) as count FROM orders GROUP BY status");
+while ($row = $order_status_query->fetch_assoc()) {
+    if (array_key_exists($row['status'], $status_counts)) {
+        $status_counts[$row['status']] = $row['count'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -40,8 +56,8 @@ $total_products = $conn->query("SELECT COUNT(*) as count FROM products")->fetch_
             <!-- Sidebar -->
             <div class="col-md-2 sidebar">
                 <div class="sidebar-logo d-flex align-items-center gap-2">
-                    <img src="../uploads/logomay.jpg" alt="Mây Admin" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #d63384;">
-                    <span style="color: #333; font-size: 19px;">Mây Admin</span>
+                    <img src="../uploads/logomay.jpg" alt="Mây Store" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #d63384;">
+                    <span style="color: #333; font-size: 19px;">Mây Store</span>
                 </div>
                 <nav>
                     <a href="dashboard.php"><i class="bi bi-house-door"></i> Dashboard</a>
@@ -59,7 +75,17 @@ $total_products = $conn->query("SELECT COUNT(*) as count FROM products")->fetch_
 
             <!-- Main Content -->
             <div class="col-md-10 main-content">
-                <h4 class="fw-bold mb-4">Thống kê doanh thu và báo cáo hệ thống</h4>
+                <!-- Topbar góc phải chứa thông tin Admin -->
+                <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded-4 shadow-sm">
+                    <h4 class="fw-bold mb-0 text-dark">Thống kê doanh thu và báo cáo hệ thống</h4>
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="../uploads/logomay.jpg" alt="Admin" style="width: 42px; height: 42px; object-fit: cover; border-radius: 50%; border: 2px solid #d63384;">
+                        <div>
+                            <h6 class="mb-0 fw-bold text-dark">Mây Admin</h6>
+                            <small class="text-muted">Quản trị viên hệ thống</small>
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- Các thẻ thống kê tổng quan -->
                 <div class="row g-4 mb-4">
@@ -101,10 +127,25 @@ $total_products = $conn->query("SELECT COUNT(*) as count FROM products")->fetch_
                     </div>
                 </div>
 
-                <!-- Biểu đồ doanh thu -->
-                <div class="card border-0 shadow-sm p-4 rounded-4">
-                    <h5 class="fw-bold mb-3">Biểu đồ tăng trưởng doanh thu theo tháng</h5>
-                    <canvas id="revenueChart" height="110"></canvas>
+                <!-- Khu vực hiển thị 2 Biểu đồ (Đường và Tròn) -->
+                <div class="row g-4">
+                    <!-- Biểu đồ doanh thu (Bên trái) -->
+                    <div class="col-md-7">
+                        <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
+                            <h5 class="fw-bold mb-3">Biểu đồ tăng trưởng doanh thu theo tháng</h5>
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Biểu đồ tròn Tỷ lệ đơn hàng (Bên phải) -->
+                    <div class="col-md-5">
+                        <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
+                            <h5 class="fw-bold mb-3">Tỷ lệ đơn hàng</h5>
+                            <div class="d-flex justify-content-center align-items-center" style="height: 280px;">
+                                <canvas id="orderStatusChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -112,8 +153,9 @@ $total_products = $conn->query("SELECT COUNT(*) as count FROM products")->fetch_
 
     <!-- Script cấu hình biểu đồ Chart.js -->
     <script>
-        const ctx = document.getElementById('revenueChart').getContext('2d');
-        new Chart(ctx, {
+        // 1. Biểu đồ đường Doanh thu
+        const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctxRevenue, {
             type: 'line',
             data: {
                 labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
@@ -129,8 +171,35 @@ $total_products = $conn->query("SELECT COUNT(*) as count FROM products")->fetch_
             },
             options: {
                 responsive: true,
+                plugins: { legend: { position: 'top' } }
+            }
+        });
+
+        // 2. Biểu đồ tròn Tỷ lệ đơn hàng 
+        const ctxOrder = document.getElementById('orderStatusChart').getContext('2d');
+        new Chart(ctxOrder, {
+            type: 'doughnut',
+            data: {
+                labels: ['Hoàn thành', 'Đang giao', 'Chờ xác nhận', 'Đã hủy'],
+                datasets: [{
+                    data: [
+                        <?= $status_counts['completed'] ?>, 
+                        <?= $status_counts['shipping'] ?>, 
+                        <?= $status_counts['confirmed'] + $status_counts['pending'] ?>, 
+                        <?= $status_counts['cancelled'] ?>
+                    ],
+                    backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
-                    legend: { position: 'top' }
+                    legend: {
+                        position: 'right',
+                        labels: { boxWidth: 12, font: { size: 13 } }
+                    }
                 }
             }
         });
