@@ -45,10 +45,22 @@ $result = $conn->query("SELECT products.*, categories.name as cat_name FROM prod
 
             <!-- Main Content -->
             <div class="col-md-10 main-content">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="fw-bold">Quản lý sản phẩm</h4>
+                <!-- Topbar góc phải chứa thông tin Admin -->
+                <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded-4 shadow-sm">
+                    <h4 class="fw-bold mb-0 text-dark">Quản lý sản phẩm</h4>
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="../../uploads/logomay.jpg" alt="Admin" style="width: 42px; height: 42px; object-fit: cover; border-radius: 50%; border: 2px solid #d63384;">
+                        <div>
+                            <h6 class="mb-0 fw-bold text-dark">Mây Admin</h6>
+                            <small class="text-muted">Quản trị viên hệ thống</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end mb-4">
                     <a href="create.php" class="btn btn-dark">+ Thêm sản phẩm</a>
                 </div>
+
                 <div class="card border-0 shadow-sm p-3 rounded-4">
                     <table class="table align-middle mb-0">
                         <thead>
