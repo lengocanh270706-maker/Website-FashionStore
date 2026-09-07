@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $image = "";
         if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
             $image = time() . '_' . $_FILES['image']['name'];
-            move_uploaded_file($_FILES['image']['tmp_name'], '../../uploads/' . $image);
+            move_uploaded_file($_FILES['image']['tmp_name'], '../../uploads/posts/' . $image);
         }
 
         $stmt = $conn->prepare("INSERT INTO posts (title, content, image, author_id, status) VALUES (?, ?, ?, ?, ?)");

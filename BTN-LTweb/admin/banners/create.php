@@ -1,78 +1,153 @@
 <?php
 require_once '../../includes/database.php';
 
-$error = "";
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $title = trim($_POST['title']);
-    $description = trim($_POST['description']);
-    $link = trim($_POST['link']);
-    $status = $_POST['status'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = trim($_POST['title'] ?? '');
+    $link = trim($_POST['link'] ?? '');
+    $status = isset($_POST['status']) ? 1 : 0;
+    $image = '';
 
-    if (!empty($title)) {
-        $image = "";
-        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-            $image = time() . '_' . $_FILES['image']['name'];
-            move_uploaded_file($_FILES['image']['tmp_name'], '../../uploads/' . $image);
+    if (!empty($_FILES['image']['name'])) {
+        $upload_dir = '../../uploads/banners/';
+
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
         }
 
-        $stmt = $conn->prepare("INSERT INTO banners (title, description, image, link, status) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssi", $title, $description, $image, $link, $status);
-        
-        if ($stmt->execute()) {
-            header("Location: index.php");
-            exit();
-        } else {
-            $error = "Lỗi cơ sở dữ liệu: " . $conn->error;
+        $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+        if (!in_array($ext, $allowed)) {
+            die('Định dạng ảnh không hợp lệ.');
         }
-    } else {
-        $error = "Vui lòng nhập tiêu đề banner!";
+
+        $image = time() . '_' . uniqid() . '.' . $ext;
+
+        if (!move_uploaded_file($_FILES['image']['tmp_name'], $upload_dir . $image)) {
+            die('Không thể tải ảnh lên.');
+        }
     }
+
+    if ($title === '') {
+        die('Vui lòng nhập tiêu đề banner.');
+    }
+
+    $stmt = $conn->prepare("
+        INSERT INTO banners (title, image, link, status)
+        VALUES (?, ?, ?, ?)
+    ");
+    $stmt->bind_param("sssi", $title, $image, $link, $status);
+    $stmt->execute();
+
+    header('Location: index.php');
+    exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Thêm Banner - Mây Admin</title>
+    <title>Thêm banner - Mây Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
-<body class="bg-light p-5">
-    <div class="container" style="max-width: 700px;">
-        <div class="card border-0 shadow-sm p-4 rounded-4">
-            <h4 class="fw-bold mb-4">Thêm banner mới</h4>
-            <?php if (!empty($error)): ?>
-                <div class="alert alert-danger"><?= $error ?></div>
-            <?php endif; ?>
-            <form method="POST" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Tiêu đề banner *</label>
-                    <input type="text" name="title" class="form-control" placeholder="Nhập tiêu đề banner..." required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Hình ảnh banner *</label>
-                    <input type="file" name="image" class="form-control" accept="image/*" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Đường dẫn liên kết (Link khi click vào banner)</label>
-                    <input type="text" name="link" class="form-control" placeholder="Ví dụ: products/detail.php?id=1">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Trạng thái hiển thị</label>
-                    <select name="status" class="form-select w-50">
-                        <option value="1">Bật (Hiển thị ngay)</option>
-                        <option value="0">Tắt (Ẩn)</option>
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Mô tả ngắn</label>
-                    <textarea name="description" rows="3" class="form-control" placeholder="Nhập mô tả hoặc khẩu hiệu trên banner..."></textarea>
-                </div>
-                <div class="text-end">
-                    <a href="index.php" class="btn btn-secondary px-4 me-2">Quay lại</a>
-                    <button type="submit" class="btn btn-dark px-4">Lưu banner</button>
-                </div>
-            </form>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-2 sidebar">
+            <div class="sidebar-logo d-flex align-items-center gap-2">
+                <img src="../../uploads/images/logomay.jpg"
+                     style="width:40px;height:40px;object-fit:cover;border-radius:50%;border:2px solid #d63384">
+                <span style="color:#333;font-size:19px;">Mây Admin</span>
+            </div>
+
+            <nav>
+                <a href="../dashboard.php"><i class="bi bi-house-door"></i> Dashboard</a>
+                <a href="../products/index.php"><i class="bi bi-box"></i> Quản lý sản phẩm</a>
+                <a href="../categories/index.php"><i class="bi bi-tags"></i> Quản lý danh mục</a>
+                <a href="../orders/index.php"><i class="bi bi-receipt"></i> Quản lý đơn hàng</a>
+                <a href="../users/index.php"><i class="bi bi-person"></i> Quản lý người dùng</a>
+                <a href="../posts/index.php"><i class="bi bi-journal-text"></i> Quản lý bài viết</a>
+                <a href="index.php" class="active"><i class="bi bi-image"></i> Quản lý banner</a>
+                <a href="../statistics.php"><i class="bi bi-bar-chart"></i> Thống kê doanh thu</a>
+                <hr class="my-3 text-muted">
+                <a href="../../logout.php" class="text-danger">
+                    <i class="bi bi-box-arrow-right"></i> Đăng xuất
+                </a>
+            </nav>
         </div>
+
+        <div class="col-md-10 main-content">
+            <h4 class="fw-bold mb-4">Thêm banner</h4>
+
+            <div class="card border-0 shadow-sm p-4 rounded-4">
+                <form method="POST" enctype="multipart/form-data">
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Tiêu đề banner</label>
+                        <input type="text" name="title" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Hình ảnh</label>
+                        <input type="file" name="image" class="form-control"
+                               accept=".jpg,.jpeg,.png,.webp" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Liên kết</label>
+
+                        <select id="link_type" class="form-select mb-2">
+                            <option value="">Không liên kết</option>
+                            <option value="home">Trang chủ</option>
+                            <option value="products">Trang sản phẩm</option>
+                            <option value="product">Chi tiết sản phẩm</option>
+                        </select>
+
+                        <input type="text"
+                               id="product_id"
+                               class="form-control mb-2"
+                               placeholder="Nhập ID sản phẩm"
+                               style="display:none">
+
+                        <input type="text"
+                               name="link"
+                               id="link"
+                               class="form-control"
+                               placeholder="Link liên kết">
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input type="checkbox"
+                               name="status"
+                               class="form-check-input"
+                               id="status"
+                               checked>
+                        <label class="form-check-label" for="status">
+                            Hiển thị banner
+                        </label>
+                    </div>
+
+                    <a href="index.php" class="btn btn-secondary">
+                        Quay lại
+                    </a>
+
+                    <button type="submit" class="btn btn-dark">
+                        Thêm banner
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
     </div>
+</div>
+
+<script src="../assets/js/script.js?v=5"></script>
+
 </body>
 </html>

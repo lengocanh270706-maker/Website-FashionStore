@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $image = $post['image'];
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $image = time() . '_' . $_FILES['image']['name'];
-        move_uploaded_file($_FILES['image']['tmp_name'], '../../uploads/' . $image);
+        move_uploaded_file($_FILES['image']['tmp_name'], '../../uploads/posts/' . $image);
     }
 
     $stmt_update = $conn->prepare("UPDATE posts SET title = ?, content = ?, image = ?, status = ? WHERE id = ?");
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label class="form-label fw-bold">Ảnh bìa hiện tại</label>
                     <div class="mb-2">
                         <?php if(!empty($post['image'])): ?>
-                            <img src="../../uploads/<?= htmlspecialchars($post['image']) ?>" style="width: 100px; height: 60px; object-fit: cover; border-radius: 6px;" alt="">
+                            <img src="../../uploads/posts/<?= htmlspecialchars($post['image']) ?>" style="width: 100px; height: 60px; object-fit: cover; border-radius: 6px;" alt="">
                         <?php else: ?>
                             <span class="text-muted small">Không có ảnh bìa</span>
                         <?php endif; ?>
