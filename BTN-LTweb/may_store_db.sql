@@ -18,17 +18,17 @@ CREATE TABLE users (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO users (id,name,email,password,phone,address,avatar,dob,gender,role,status,created_at) VALUES
-(1,'Admin','admin@gmail.com','$2y$10$HE6NvcU97nMK2lyMyHXjmOUS0p6vFq/0IG/MaapUqzPQDtNkXYf6m','0901234567','TP. Hồ Chí Minh',NULL,NULL,NULL,'admin',1,'2026-09-04 15:44:43'),
-(2,'Nguyễn Văn An','an@gmail.com','$2y$10$Czj4WU36wuzg6cn50RR1xucPiXKda8KA9sd7YnJG1Kfe4ifnjymhe','0912345678','TP. Hồ Chí Minh',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
-(3,'Trần Thị Bình','binh@gmail.com','$2y$10$zvEHLp7PipT8MMVbuRx19eRmcByKP4LG3iTdHqmTKbSjqV7xypTiq','0987654321','Đồng Nai',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
-(4,'Lê Minh Anh','anh@gmail.com','$2y$10$F4tfgKd3VkCOKMlu1/nk5.08U6.LzqVBMKEbfcMucDyYaj12A5pv.','0933333333','TP. Hồ Chí Minh',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
+(1,'Admin','admin@gmail.com','admin123','0901234567','TP. Hồ Chí Minh',NULL,NULL,NULL,'admin',1,'2026-09-04 15:44:43'),
+(2,'Nguyễn Văn An','an@gmail.com','an1234','0912345678','TP. Hồ Chí Minh',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
+(3,'Trần Thị Bình','binh@gmail.com','binh1234','0987654321','Đồng Nai',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
+(4,'Lê Minh Anh','anh@gmail.com','anh1234','0933333333','TP. Hồ Chí Minh',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
 (5,'Phạm Hoàng Nam','nam@gmail.com','nam1234','0944444444','Bình Dương',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
 (6,'Võ Ngọc Mai','mai@gmail.com','mai1234','0955555555','TP. Hồ Chí Minh',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
 (7,'Nguyễn Khánh Linh','linh@gmail.com','linh1234','0966666666','Long An',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
-(8,'Trần Minh Khang','khang@gmail.com','$2y$10$FD4nE3DGe0UyEfemeaVTC..I../dG0q5ehxjTpcB.phLyGnT9we0m','0977777777','123, Phường Ba Đình, Thành phố Hà Nội',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
-(9,'Đặng Thu Hà','ha@gmail.com','$2y$10$93l8JII49t.5IxMpb12xwulqvWftCsViylGrH0o.SotAisQJsQQKa','0988888888','Đồng Nai',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
+(8,'Trần Minh Khang','khang@gmail.com','khang1234','0977777777','123, Phường Ba Đình, Thành phố Hà Nội',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
+(9,'Đặng Thu Hà','ha@gmail.com','ha1234','0988888888','Đồng Nai',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
 (10,'Bùi Gia Huy','huy@gmail.com','huy1234','0999999999','TP. Hồ Chí Minh',NULL,NULL,NULL,'user',1,'2026-09-04 15:44:43'),
-(12,'vy','vy@gmail.com','$2y$10$TR3Q.KozsVdnm7.NzKDjw.zzG0PVlu3IpD4Bp3r3YX1lfNs4FQbV.','','',NULL,NULL,NULL,'user',1,'2026-09-06 17:34:52');
+(12,'vy','vy@gmail.com','vy1234','','',NULL,NULL,NULL,'user',1,'2026-09-06 17:34:52');
 
 CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
