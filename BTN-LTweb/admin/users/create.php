@@ -87,10 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="0">Bị khóa (Locked)</option>
                     </select>
                 </div>
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Địa chỉ</label>
-                    <textarea name="address" rows="2" class="form-control" placeholder="Nhập địa chỉ..."></textarea>
-                </div>
                 <div class="text-end">
                     <a href="index.php" class="btn btn-secondary px-4 me-2">Quay lại</a>
                     <button type="submit" class="btn btn-dark px-4">Lưu người dùng</button>

@@ -112,7 +112,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
                 <div class="col-md-4 mb-3">
                     <label class="form-label fw-bold">Tồn kho</label>
-                    <input type="number" name="quantity" class="form-control" value="<?=$product['quantity']?>" min="0">
+                    <input type="number" name="quantity" id="totalQuantity" class="form-control" value="<?=$product['quantity']?>" min="0" readonly>
                 </div>
 
             </div>
@@ -197,6 +197,32 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const totalQuantity = document.getElementById('totalQuantity');
+    const variantInputs = document.querySelectorAll('input[name^="variant_quantity["]');
+
+    function updateTotalQuantity() {
+        let total = 0;
+
+        variantInputs.forEach(function (input) {
+            total += parseInt(input.value) || 0;
+        });
+
+        if (totalQuantity) {
+            totalQuantity.value = total;
+        }
+    }
+
+    variantInputs.forEach(function (input) {
+        input.addEventListener('input', updateTotalQuantity);
+    });
+
+    // Tính ngay khi mở trang
+    updateTotalQuantity();
+});
+</script>
 
 </body>
 </html>

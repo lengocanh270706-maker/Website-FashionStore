@@ -219,17 +219,6 @@ require_once __DIR__ . '/../includes/header.php';
                         </div>
                     </div>
                 </div>
-
-                <!-- IMAGE -->
-                <div class="text-center mt-4">
-                    <img
-                        src="../assets/images/auth/image7.png"
-                        alt="Mây Fashion Store"
-                        class="img-fluid rounded-4 shadow-sm"
-                        style="max-height:220px; object-fit:cover;"
-                    >
-                </div>
-
             </div>
         </div>
 

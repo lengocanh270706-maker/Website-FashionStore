@@ -208,6 +208,6 @@ require_once __DIR__ . '/../includes/menu.php';
     </div>
 </div>
 
-<script src="../assets/js/script.js?v=1"></script>
+
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

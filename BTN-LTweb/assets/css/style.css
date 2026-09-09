@@ -1,12 +1,12 @@
 /*ADMIN*/
 /*dùng chung*/
 body { background-color: #f8f9fc; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
-.sidebar { background-color: #ffffff; min-height: 100vh; border-right: 1px solid #f0f0f0; padding-top: 20px; position: fixed; width: 16.666667%; top: 0; left: 0; }
+.sidebar { background-color: #ffffff; border-right: 1px solid #f0f0f0; padding-top: 20px;}
 .sidebar-logo { font-size: 20px; font-weight: 700; margin-bottom: 30px; padding-left: 20px; color: #000; }
 .sidebar a { display: block; padding: 12px 20px; color: #6c757d; text-decoration: none; font-weight: 500; font-size: 15px; margin-bottom: 5px; border-radius: 0 30px 30px 0; }
 .sidebar a:hover, .sidebar a.active { background-color: #fff0f5; color: #d63384; font-weight: 600; }
 .sidebar a i { margin-right: 12px; font-size: 18px; }
-.main-content { margin-left: 16.666667%; padding: 30px 40px; width: 83.333333%; }
+.main-content {padding: 30px 40px; }
 /*Banner*/
 .banner-img { width: 120px; height: 50px; object-fit: cover; border-radius: 6px; }
 th.text-center,td.text-center {text-align: center !important;vertical-align: middle;}
@@ -84,7 +84,6 @@ th.text-center,td.text-center {text-align: center !important;vertical-align: mid
 .newsletter-form button i{margin-left:8px}
 
 /* BENEFITS */
-
 .benefits{padding:30px 0;border-top:1px solid #eee;border-bottom:1px solid #eee}
 .benefits-inner{display:grid;grid-template-columns:repeat(4,1fr)}
 .benefit-item{display:flex;align-items:center;gap:12px;padding:10px 20px;border-right:1px solid #eee}
@@ -120,7 +119,6 @@ th.text-center,td.text-center {text-align: center !important;vertical-align: mid
 .may-logo{display:flex;flex-direction:column;align-items:center;color:#111;text-decoration:none}
 .may-logo-main{font-size:34px;font-weight:600;letter-spacing:5px}
 .may-logo-sub{font-size:9px;letter-spacing:3px;color:#555}
-.mobile-menu-button{display:none;border:0;background:none;font-size:24px}
 .main-nav{display:flex;gap:25px;flex:1;justify-content:center}
 .nav-item{color:#222;text-decoration:none;font-size:16px}
 .nav-item:hover{color:#888}

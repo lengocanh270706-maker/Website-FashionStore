@@ -217,7 +217,7 @@ require_once __DIR__ . '/../includes/header.php';
                                     <button
                                         type="button"
                                         class="btn btn-outline-secondary"
-                                        onclick="togglePassword('register-password', this)"
+                                        onclick="toggleChangePassword('register-password', this)"
                                         aria-label="Hiện mật khẩu"
                                     >
                                         <i class="bi bi-eye"></i>
@@ -245,7 +245,7 @@ require_once __DIR__ . '/../includes/header.php';
                                     <button
                                         type="button"
                                         class="btn btn-outline-secondary"
-                                        onclick="togglePassword('confirm-password', this)"
+                                        onclick="toggleChangePassword('confirm-password', this)"
                                         aria-label="Hiện mật khẩu"
                                     >
                                         <i class="bi bi-eye"></i>
@@ -336,22 +336,12 @@ require_once __DIR__ . '/../includes/header.php';
                         </div>
                     </div>
                 </div>
-
-                <!-- IMAGE -->
-                <div class="text-center mt-4">
-                    <img
-                        src="../assets/images/auth/image7.png"
-                        alt="Mây Fashion Store"
-                        class="img-fluid rounded-4 shadow-sm"
-                        style="max-height:220px;object-fit:cover;"
-                    >
-                </div>
             </div>
         </div>
     </div>
 </section>
 
-<script src="../assets/js/script.js"></script>
+
 
 <?php
 require_once __DIR__ . '/../includes/footer.php';

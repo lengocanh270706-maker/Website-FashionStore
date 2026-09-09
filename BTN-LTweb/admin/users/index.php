@@ -26,27 +26,44 @@ $result = $conn->query("SELECT * FROM users ORDER BY id DESC");
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-2 sidebar">
-                <div class="sidebar-logo d-flex align-items-center gap-2">
-                    <img src="../../uploads/images/logomay.jpg" alt="Mây Admin" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #d63384;">
-                    <span style="color: #333; font-size: 19px;">Mây Store</span>
-                </div>
-                <nav>
-                    <a href="../dashboard.php"><i class="bi bi-house-door"></i> Dashboard</a>
-                    <a href="../products/index.php"><i class="bi bi-box"></i> Quản lý sản phẩm</a>
-                    <a href="../categories/index.php"><i class="bi bi-tags"></i> Quản lý danh mục</a>
-                    <a href="../orders/index.php"><i class="bi bi-receipt"></i> Quản lý đơn hàng</a>
-                    <a href="index.php" class="active"><i class="bi bi-person"></i> Quản lý người dùng</a>
-                    <a href="../posts/index.php"><i class="bi bi-journal-text"></i> Quản lý bài viết</a>
-                    <a href="../banners/index.php"><i class="bi bi-image"></i> Quản lý banner</a>
-                    <a href="../statistics.php"><i class="bi bi-bar-chart"></i> Thống kê doanh thu</a>
-                    <hr class="my-3 text-muted">
-                    <a href="../../fashion-store/logout.php" class="text-danger"><i class="bi bi-box-arrow-right"></i> Đăng xuất</a>
-                </nav>
+<div class="container-fluid">
+<div class="row">
+<div class="col-12 d-md-none">
+    <nav class="navbar navbar-light bg-white border-bottom">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center gap-2">
+                <button class="navbar-toggler border-0 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#adminMenu" aria-controls="adminMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="bi bi-list fs-2"></i>
+                </button>
+                <span class="navbar-brand fw-bold mb-0">Mây Store</span>
             </div>
+        </div>
+    </nav>
+</div>
+
+<div class="col-12 col-md-3 col-lg-2 sidebar">
+    <div class="collapse d-md-block" id="adminMenu">
+
+        <div class="sidebar-logo d-flex align-items-center gap-2">
+            <img src="../../uploads/images/logomay.jpg" alt="Mây Store" style="width:40px;height:40px;object-fit:cover;border-radius:50%;border:2px solid #d63384;">
+            <span style="color:#333;font-size:19px;">Mây Store</span>
+        </div>
+
+        <nav class="d-flex flex-wrap flex-md-column gap-1">
+            <a href="../dashboard.php" class="active"><i class="bi bi-house-door"></i> Dashboard</a>
+            <a href="../products/index.php"><i class="bi bi-box"></i> Quản lý sản phẩm</a>
+            <a href="../categories/index.php"><i class="bi bi-tags"></i> Quản lý danh mục</a>
+            <a href="../orders/index.php"><i class="bi bi-receipt"></i> Quản lý đơn hàng</a>
+            <a href="../users/index.php"><i class="bi bi-person"></i> Quản lý người dùng</a>
+            <a href="../posts/index.php"><i class="bi bi-journal-text"></i> Quản lý bài viết</a>
+            <a href="../banners/index.php"><i class="bi bi-image"></i> Quản lý banner</a>
+            <a href="../statistics.php"><i class="bi bi-bar-chart"></i> Thống kê doanh thu</a>
+            <hr class="my-3 text-muted w-100">
+            <a href="../../fashion-store/logout.php" class="text-danger"><i class="bi bi-box-arrow-right"></i> Đăng xuất</a>
+        </nav>
+
+    </div>
+</div>
 
             <!-- Main Content -->
             <div class="col-md-10 main-content">
@@ -122,5 +139,6 @@ $result = $conn->query("SELECT * FROM users ORDER BY id DESC");
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

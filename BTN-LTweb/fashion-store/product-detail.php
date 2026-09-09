@@ -84,7 +84,7 @@ include '../includes/menu.php';
         </a>
     </div>
 
-```
+
 <div class="row g-5">
     <div class="col-lg-6">
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
@@ -117,7 +117,7 @@ include '../includes/menu.php';
                 <?php endif; ?>
 
                 <?php foreach ($subImages as $image): ?>
-                    <img src="../uploads/<?= htmlspecialchars($image['image']) ?>"
+                    <img src="../uploads/products/<?= htmlspecialchars($image['image']) ?>"
                          alt="<?= htmlspecialchars($product['name']) ?>"
                          class="product-thumbnail border rounded-3 p-1"
                          style="width:75px;height:90px;object-fit:cover;cursor:pointer;"
@@ -248,7 +248,7 @@ include '../includes/menu.php';
         <?php endif; ?>
     </div>
 </div>
-```
+
 
 </div>
 
@@ -259,6 +259,5 @@ window.hasSizes = <?= !empty($sizes) ? 'true' : 'false' ?>;
 window.hasColors = <?= !empty($colors) ? 'true' : 'false' ?>;
 </script>
 
-<script src="../assets/js/script.js?v=4"></script>
 
 <?php include '../includes/footer.php'; ?>

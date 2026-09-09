@@ -99,20 +99,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label class="form-label fw-bold">Địa chỉ giao hàng *</label>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <select id="province" class="form-select" required>
+                    <select name="province" id="province" class="form-select" required>
                         <option value="">-- Tỉnh / Thành phố --</option>
                     </select>
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <select id="ward" class="form-select" required disabled>
+                    <select name="ward" id="ward" class="form-select" required disabled>
                         <option value="">-- Phường / Xã --</option>
                     </select>
                 </div>
             </div>
 
             <div class="mb-4">
-                <input type="text" id="detail_address" class="form-control"
+                <input type="text" name="detail_address" id="detail_address" class="form-control"
                        placeholder="Số nhà, tên đường..." required>
                 <input type="hidden" name="address" id="address">
             </div>
@@ -126,7 +126,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </div>
 
-<script src="../assets/js/script.js?v=5"></script>
+
+<script src="../../assets/js/script.js?v=10"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+    const orderForm=document.getElementById('orderForm');
+    if(orderForm){
+        const orderAddress=setupAddress('province','ward','detail_address','address');
+        orderForm.addEventListener('submit',function(e){
+            if(orderAddress&&!orderAddress()){
+                e.preventDefault();
+            }
+        });
+    }
+});
+</script>
 
 </body>
 </html>

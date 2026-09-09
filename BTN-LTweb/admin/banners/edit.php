@@ -36,17 +36,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = trim($_POST['title'] ?? '');
     $link_type = $_POST['link_type'] ?? '';
     $product_id = (int)($_POST['product_id'] ?? 0);
+    $start_at = !empty($_POST['start_at']) ? $_POST['start_at'] : null;
+    $end_at = !empty($_POST['end_at']) ? $_POST['end_at'] : null;
     $status = isset($_POST['status']) ? 1 : 0;
     $image = $banner['image'];
 
     if (!empty($_FILES['image']['name'])) {
         $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+        if (!in_array($ext, $allowed)) {
+            die('Định dạng ảnh không hợp lệ.');
+        }
+
         $image = uniqid() . '.' . $ext;
         move_uploaded_file($_FILES['image']['tmp_name'], '../../uploads/banners/' . $image);
 
         if (!empty($banner['image'])) {
             $old = '../../uploads/banners/' . $banner['image'];
-            if (file_exists($old)) unlink($old);
+            if (file_exists($old)) {
+                unlink($old);
+            }
         }
     }
 
@@ -62,10 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $stmt = $conn->prepare("
         UPDATE banners
-        SET title = ?, image = ?, link = ?, status = ?, updated_at = NOW()
+        SET title = ?, image = ?, link = ?, start_at = ?, end_at = ?, status = ?, updated_at = NOW()
         WHERE id = ?
     ");
-    $stmt->bind_param("sssii", $title, $image, $link, $status, $id);
+    $stmt->bind_param("sssssii", $title, $image, $link, $start_at, $end_at, $status, $id);
     $stmt->execute();
 
     header('Location: index.php');
@@ -83,6 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
+
 <body>
 
 <div class="container py-4">
@@ -94,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <form method="POST" enctype="multipart/form-data">
+
         <div class="mb-3">
             <label class="form-label">Tiêu đề</label>
             <input type="text" name="title" class="form-control"
@@ -105,6 +117,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <img src="../../uploads/banners/<?= htmlspecialchars($banner['image']) ?>"
                  width="300" class="mb-2 rounded">
             <input type="file" name="image" class="form-control" accept="image/*">
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Ngày bắt đầu</label>
+                <input type="datetime-local" name="start_at" class="form-control"
+                       value="<?= !empty($banner['start_at']) ? date('Y-m-d\TH:i', strtotime($banner['start_at'])) : '' ?>">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Ngày kết thúc</label>
+                <input type="datetime-local" name="end_at" class="form-control"
+                       value="<?= !empty($banner['end_at']) ? date('Y-m-d\TH:i', strtotime($banner['end_at'])) : '' ?>">
+            </div>
         </div>
 
         <div class="mb-3">
@@ -139,6 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button class="btn btn-dark">
             <i class="bi bi-save"></i> Lưu thay đổi
         </button>
+
     </form>
 </div>
 
@@ -154,6 +181,8 @@ type.addEventListener('change', function() {
     if (!show) product.value = '';
 });
 </script>
+
 <script src="../assets/js/script.js?v=1"></script>
+
 </body>
 </html>

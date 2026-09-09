@@ -191,9 +191,8 @@ require_once __DIR__ . '/../includes/menu.php';
                 <div class="list-group list-group-flush">
                     <a href="profile.php" class="list-group-item list-group-item-action active py-3"><i class="bi bi-person me-2"></i>Thông tin tài khoản</a>
                     <a href="change-password.php" class="list-group-item list-group-item-action py-3"><i class="bi bi-lock me-2"></i>Đổi mật khẩu</a>
-                    <a href="#" class="list-group-item list-group-item-action py-3"><i class="bi bi-geo-alt me-2"></i>Địa chỉ của tôi</a>
                     <a href="orders.php" class="list-group-item list-group-item-action py-3"><i class="bi bi-bag me-2"></i>Đơn hàng của tôi</a>
-                    <a href="#" class="list-group-item list-group-item-action py-3"><i class="bi bi-star me-2"></i>Đánh giá của tôi</a>
+                    <a href="#" class="list-group-item list-group-item-action py-3" data-bs-toggle="modal" data-bs-target="#reviewModal"><i class="bi bi-star me-2"></i>Đánh giá của tôi</a>
                     <a href="logout.php" class="list-group-item list-group-item-action py-3 text-danger"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a>
                 </div>
             </div>
@@ -373,24 +372,82 @@ require_once __DIR__ . '/../includes/menu.php';
                 </div>
 
                 <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action p-4">
-                        <div class="d-flex align-items-center gap-3"><i class="bi bi-bell fs-5"></i><div class="flex-grow-1"><div class="fw-semibold">Thông báo</div><small class="text-muted">Quản lý tùy chọn nhận thông báo</small></div><i class="bi bi-chevron-right text-muted"></i></div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action p-4">
-                        <div class="d-flex align-items-center gap-3"><i class="bi bi-shield-check fs-5"></i><div class="flex-grow-1"><div class="fw-semibold">Bảo mật tài khoản</div><small class="text-muted">Quản lý bảo mật và thiết bị đăng nhập</small></div><i class="bi bi-chevron-right text-muted"></i></div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action p-4">
-                        <div class="d-flex align-items-center gap-3"><i class="bi bi-credit-card fs-5"></i><div class="flex-grow-1"><div class="fw-semibold">Phương thức thanh toán</div><small class="text-muted">Quản lý phương thức thanh toán</small></div><i class="bi bi-chevron-right text-muted"></i></div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action p-4 text-danger">
-                        <div class="d-flex align-items-center gap-3"><i class="bi bi-trash3 fs-5"></i><div class="flex-grow-1"><div class="fw-semibold">Xóa tài khoản</div><small class="text-muted">Xóa vĩnh viễn tài khoản và dữ liệu</small></div><i class="bi bi-chevron-right text-muted"></i></div>
-                    </a>
+
+                    <div class="list-group-item list-group-item-action p-4" data-bs-toggle="modal" data-bs-target="#comingSoonModal" style="cursor:pointer">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-bell fs-5"></i>
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">Thông báo</div>
+                                <small class="text-muted">Quản lý tùy chọn nhận thông báo</small>
+                            </div>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item list-group-item-action p-4" data-bs-toggle="modal" data-bs-target="#comingSoonModal" style="cursor:pointer">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-shield-check fs-5"></i>
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">Bảo mật tài khoản</div>
+                                <small class="text-muted">Quản lý bảo mật và thiết bị đăng nhập</small>
+                            </div>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item list-group-item-action p-4" data-bs-toggle="modal" data-bs-target="#comingSoonModal" style="cursor:pointer">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-credit-card fs-5"></i>
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">Phương thức thanh toán</div>
+                                <small class="text-muted">Quản lý phương thức thanh toán</small>
+                            </div>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item list-group-item-action p-4 text-danger" data-bs-toggle="modal" data-bs-target="#comingSoonModal" style="cursor:pointer">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-trash3 fs-5"></i>
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">Xóa tài khoản</div>
+                                <small class="text-muted">Xóa vĩnh viễn tài khoản và dữ liệu</small>
+                            </div>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal fade" id="comingSoonModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 rounded-4">
+                        <div class="modal-body text-center p-5">
+                            <i class="bi bi-tools fs-1 text-muted"></i>
+                            <h5 class="mt-3 fw-bold">Tính năng đang phát triển</h5>
+                            <p class="text-muted mb-4">Tính năng này sẽ được cập nhật trong thời gian tới.</p>
+                            <button type="button" class="btn btn-dark px-4" data-bs-dismiss="modal">Đã hiểu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 rounded-4">
+                        <div class="modal-body text-center p-5">
+                            <i class="bi bi-tools fs-1 text-muted"></i>
+                            <h5 class="mt-3 fw-bold">Tính năng đang phát triển</h5>
+                            <p class="text-muted mb-4">Tính năng này sẽ được cập nhật trong thời gian tới.</p>
+                            <button type="button" class="btn btn-dark px-4" data-bs-dismiss="modal">Đã hiểu</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script src="../assets/js/script.js?v=4"></script>
 
 <?php include '../includes/footer.php'; ?>

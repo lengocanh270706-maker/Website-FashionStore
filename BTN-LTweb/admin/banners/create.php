@@ -4,6 +4,8 @@ require_once '../../includes/database.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = trim($_POST['title'] ?? '');
     $link = trim($_POST['link'] ?? '');
+    $start_at = !empty($_POST['start_at']) ? $_POST['start_at'] : null;
+    $end_at = !empty($_POST['end_at']) ? $_POST['end_at'] : null;
     $status = isset($_POST['status']) ? 1 : 0;
     $image = '';
 
@@ -33,10 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $stmt = $conn->prepare("
-        INSERT INTO banners (title, image, link, status)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO banners (title, image, link, start_at, end_at, status)
+        VALUES (?, ?, ?, ?, ?, ?)
     ");
-    $stmt->bind_param("sssi", $title, $image, $link, $status);
+    $stmt->bind_param("sssssi", $title, $image, $link, $start_at, $end_at, $status);
     $stmt->execute();
 
     header('Location: index.php');
@@ -96,6 +98,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label class="form-label fw-semibold">Hình ảnh</label>
                         <input type="file" name="image" class="form-control"
                                accept=".jpg,.jpeg,.png,.webp" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Ngày bắt đầu</label>
+                            <input type="datetime-local" name="start_at" class="form-control">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Ngày kết thúc</label>
+                            <input type="datetime-local" name="end_at" class="form-control">
+                        </div>
                     </div>
 
                     <div class="mb-3">

@@ -61,7 +61,7 @@ $saved_name = $user_info['name'] ?? $_SESSION['user']['name'] ?? '';
 $saved_phone = $user_info['phone'] ?? $_SESSION['user']['phone'] ?? '';
 $saved_address = trim($user_info['address'] ?? '');
 
-$has_detail_address = preg_match('/\d+/',$saved_address) && strlen($saved_address) >= 10;
+$has_saved_address = !empty($saved_address);
 
 $shipping_fee = 30000;
 $grand_total = $total + $shipping_fee;
@@ -287,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$show_saved_address = $has_detail_address && !isset($_POST['change_address']);
+$show_saved_address = $has_saved_address && !isset($_POST['change_address']);
 $current_address = $_POST['address'] ??
     ($show_saved_address ? $saved_address : '');
 ?>
@@ -298,7 +298,6 @@ $current_address = $_POST['address'] ??
 
 <div class="container-fluid py-4">
 
-```
 <?php if ($error): ?>
     <div class="alert alert-danger">
         <?= htmlspecialchars($error) ?>
@@ -346,15 +345,112 @@ $current_address = $_POST['address'] ??
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">
-                        Địa chỉ
-                    </label>
-                    <textarea name="address"
-                              class="form-control"
-                              rows="3"
-                              required><?= htmlspecialchars($current_address) ?></textarea>
-                </div>
+                <label class="form-label fw-semibold">Địa chỉ giao hàng</label>
 
+                <?php if ($has_saved_address): ?>
+
+                    <!-- ĐỊA CHỈ MẶC ĐỊNH -->
+                    <div id="savedAddressBox"
+                        class="border rounded-3 p-3 bg-light">
+
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <small class="text-muted d-block mb-1">
+                                    Địa chỉ mặc định
+                                </small>
+
+                                <div class="fw-semibold">
+                                    <?= htmlspecialchars($saved_address) ?>
+                                </div>
+                            </div>
+
+                            <button type="button"
+                                    id="changeAddressBtn"
+                                    class="btn btn-sm btn-outline-dark rounded-pill">
+                                Thay đổi
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- GIỮ ĐỊA CHỈ ĐỂ SUBMIT -->
+                    <input type="hidden"
+                        name="address"
+                        id="address"
+                        value="<?= htmlspecialchars($saved_address) ?>">
+
+                    <!-- FORM ĐỔI ĐỊA CHỈ -->
+                    <div id="changeAddressBox" class="d-none mt-3">
+
+                        <div class="row g-2 mb-2">
+
+                            <div class="col-md-6">
+                                <select id="province"
+                                        class="form-select">
+                                    <option value="">
+                                        -- Tỉnh / Thành phố --
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <select id="ward"
+                                        class="form-select"
+                                        disabled>
+                                    <option value="">
+                                        -- Phường / Xã --
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <textarea id="detail_address"
+                                class="form-control"
+                                rows="2"
+                                placeholder="Số nhà, tên đường..."></textarea>
+
+                    </div>
+
+                <?php else: ?>
+
+                    <!-- CHƯA CÓ ĐỊA CHỈ -->
+                    <div class="row g-2 mb-2">
+
+                        <div class="col-md-6">
+                            <select id="province"
+                        class="form-select"
+                        required>
+                    <option value="">
+                        -- Tỉnh / Thành phố --
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <select id="ward"
+                        class="form-select"
+                        required
+                        disabled>
+                    <option value="">
+                        -- Phường / Xã --
+                    </option>
+                </select>
+            </div>
+
+        </div>
+
+        <textarea id="detail_address"
+                  class="form-control"
+                  rows="2"
+                  placeholder="Số nhà, tên đường..."
+                  required></textarea>
+
+        <input type="hidden"
+               name="address"
+               id="address">
+
+    <?php endif; ?>
+</div>
                 <div class="mb-3">
                     <label class="form-label fw-semibold">
                         Ghi chú
@@ -482,6 +578,6 @@ $current_address = $_POST['address'] ??
 
 </div>
 
-<script src="../assets/js/script.js?v=4"></script>
+
 
 <?php include '../includes/footer.php'; ?>

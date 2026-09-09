@@ -1,3 +1,5 @@
+console.log('SCRIPT.JS ĐÃ CHẠY');
+
 document.addEventListener('DOMContentLoaded',function(){
     document.querySelectorAll('.alert').forEach(a=>{
         setTimeout(()=>{
@@ -64,9 +66,11 @@ document.querySelectorAll('.color-option').forEach(button=>{
             item.classList.remove('active','btn-dark');
             item.classList.add('btn-outline-dark');
         });
+
         this.classList.remove('btn-outline-dark');
         this.classList.add('active','btn-dark');
-        selectedColor=this.dataset.color;
+
+        selectedColor=String(this.dataset.color||'').trim();
         checkVariant();
     });
 });
@@ -77,9 +81,11 @@ document.querySelectorAll('.size-option').forEach(button=>{
             item.classList.remove('active','btn-dark');
             item.classList.add('btn-outline-dark');
         });
+
         this.classList.remove('btn-outline-dark');
         this.classList.add('active','btn-dark');
-        selectedSize=this.dataset.size;
+
+        selectedSize=String(this.dataset.size||'').trim();
         checkVariant();
     });
 });
@@ -90,6 +96,7 @@ function checkVariant(){
     const stockText=document.getElementById('stockText');
     const message=document.getElementById('variantMessage');
     const addButton=document.getElementById('addCartBtn');
+
     if(!variants.length||!variantId||!quantity||!stockText||!message||!addButton)return;
 
     const needColor=window.hasColors;
@@ -109,33 +116,39 @@ function checkVariant(){
         return;
     }
 
-    const found=variants.find(v=>
-        (!needColor||v.color===selectedColor)&&
-        (!needSize||v.size===selectedSize)
-    );
+    const found=variants.find(v=>{
+        const color=String(v.color??'').trim();
+        const size=String(v.size??'').trim();
+
+        return (!needColor||color===selectedColor)&&
+               (!needSize||size===selectedSize);
+    });
 
     if(!found){
-        variantId.value='0';
+        variantId.value='';
         stockText.textContent='Phân loại này không tồn tại';
         message.textContent='Vui lòng chọn lại màu hoặc size.';
         addButton.disabled=true;
         return;
     }
 
-    variantId.value=found.id;
+    const stock=parseInt(found.quantity)||0;
 
-    if(parseInt(found.quantity)<=0){
+    variantId.value=String(found.id);
+
+    if(stock<=0){
         stockText.innerHTML='<span class="text-danger fw-semibold"><i class="bi bi-x-circle-fill me-1"></i>Hết hàng</span>';
         addButton.disabled=true;
         message.textContent='Phiên bản này hiện đã hết hàng.';
         return;
     }
 
-    stockText.innerHTML='<span class="text-success fw-semibold"><i class="bi bi-check-circle-fill me-1"></i>Còn '+found.quantity+' sản phẩm</span>';
-    quantity.max=found.quantity;
+    stockText.innerHTML='<span class="text-success fw-semibold"><i class="bi bi-check-circle-fill me-1"></i>Còn '+stock+' sản phẩm</span>';
 
-    if(parseInt(quantity.value)>parseInt(found.quantity)){
-        quantity.value=found.quantity;
+    quantity.max=stock;
+
+    if(parseInt(quantity.value)>stock){
+        quantity.value=stock;
     }
 
     addButton.disabled=false;
@@ -144,9 +157,25 @@ function checkVariant(){
 
 document.getElementById('cartForm')?.addEventListener('submit',function(e){
     const variantId=document.getElementById('variant_id');
-    if(variants.length&&(!variantId.value||parseInt(variantId.value)<=0)){
+    const quantity=document.getElementById('quantity');
+
+    if(variants.length){
+        if(!variantId||!variantId.value||parseInt(variantId.value)<=0){
+            e.preventDefault();
+
+            const message=document.getElementById('variantMessage');
+
+            if(message){
+                message.textContent='Vui lòng chọn đầy đủ phân loại sản phẩm trước khi thêm vào giỏ hàng.';
+            }
+
+            return;
+        }
+    }
+
+    if(quantity&&parseInt(quantity.value)<=0){
         e.preventDefault();
-        document.getElementById('variantMessage').textContent='Vui lòng chọn đầy đủ phân loại sản phẩm trước khi thêm vào giỏ hàng.';
+        quantity.value=1;
     }
 });
 
@@ -210,6 +239,56 @@ function setupAddress(provinceId,wardId,detailId,addressId,oldProvince='',oldWar
                 }
             });
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const changeBtn = document.getElementById('changeAddressBtn');
+    const savedBox = document.getElementById('savedAddressBox');
+    const changeBox = document.getElementById('changeAddressBox');
+    const addressInput = document.getElementById('address');
+    const province = document.getElementById('province');
+    const ward = document.getElementById('ward');
+    const detailAddress = document.getElementById('detail_address');
+
+    // Bấm "Thay đổi"
+    if (changeBtn) {
+        changeBtn.addEventListener('click', function () {
+            savedBox.classList.add('d-none');
+            changeBox.classList.remove('d-none');
+            if (province) province.required = true;
+            if (ward) ward.required = true;
+            if (detailAddress) detailAddress.required = true;
+            // Không dùng địa chỉ cũ nữa
+            addressInput.value = '';
+        });
+    }
+
+    // Ghép địa chỉ mới
+    function updateAddress() {
+        if (!addressInput) return;
+        const provinceText = province?.options[province.selectedIndex]?.text || '';
+        const wardText =ward?.options[ward.selectedIndex]?.text || '';
+        const detail =detailAddress?.value.trim() || '';
+        let parts = [];
+        if (detail) {
+            parts.push(detail);
+        }
+
+        if (ward && ward.value) {
+            parts.push(wardText);
+        }
+
+        if (province && province.value) {
+            parts.push(provinceText);
+        }
+
+        addressInput.value = parts.join(', ');
+    }
+
+    province?.addEventListener('change', updateAddress);
+    ward?.addEventListener('change', updateAddress);
+    detailAddress?.addEventListener('input', updateAddress);
+});
 
     function updateAddress(){
         address.value=[
@@ -309,3 +388,4 @@ const orderAddress=setupAddress(
 document.getElementById('orderForm')?.addEventListener('submit',e=>{
     if(orderAddress&&!orderAddress())e.preventDefault();
 });
+
