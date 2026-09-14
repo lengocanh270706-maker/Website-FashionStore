@@ -36,8 +36,8 @@ $result = $conn->query("SELECT products.*, categories.name as cat_name FROM prod
         </div>
 
         <nav class="d-flex flex-wrap flex-md-column gap-1">
-            <a href="../dashboard.php" class="active"><i class="bi bi-house-door"></i> Dashboard</a>
-            <a href="../products/index.php"><i class="bi bi-box"></i> Quản lý sản phẩm</a>
+            <a href="../dashboard.php"><i class="bi bi-house-door"></i> Dashboard</a>
+            <a href="../products/index.php" class="active"><i class="bi bi-box"></i> Quản lý sản phẩm</a>
             <a href="../categories/index.php"><i class="bi bi-tags"></i> Quản lý danh mục</a>
             <a href="../orders/index.php"><i class="bi bi-receipt"></i> Quản lý đơn hàng</a>
             <a href="../users/index.php"><i class="bi bi-person"></i> Quản lý người dùng</a>
