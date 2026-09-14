@@ -1,6 +1,18 @@
 <?php
 require_once __DIR__ . '/../includes/auth.php';
 
+// Tạo link đăng nhập Google 
+$google_client_id = '95727767938-9ku0hbs1o22q30iob8c70uv5r3135fpg.apps.googleusercontent.com';
+$google_redirect_url = 'http://localhost/Website-FashionStore/BTN-LTweb/fashion-store/google_callback.php';
+
+$google_login_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_query([
+    'client_id' => $google_client_id,
+    'redirect_uri' => $google_redirect_url,
+    'response_type' => 'code',
+    'scope' => 'email profile',
+    'access_type' => 'online'
+]);
+
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -170,7 +182,7 @@ require_once __DIR__ . '/../includes/header.php';
                         <div class="row g-2">
                             <!-- GOOGLE -->
                             <div class="col-6">
-                                <button type="button" class="btn btn-outline-secondary w-100 py-2 rounded-3">
+                                <a href="<?= htmlspecialchars($google_login_url) ?>" class="btn btn-outline-secondary w-100 py-2 rounded-3 text-decoration-none text-dark d-flex align-items-center justify-content-center">
                                     <svg
                                         width="18"
                                         height="18"
@@ -199,12 +211,12 @@ require_once __DIR__ . '/../includes/header.php';
                                         />
                                     </svg>
                                     Google
-                                </button>
+                                </a>
                             </div>
 
                             <!-- FACEBOOK -->
                             <div class="col-6">
-                                <button type="button" class="btn btn-outline-secondary w-100 py-2 rounded-3">
+                                <button type="button" class="btn btn-outline-secondary w-100 py-2 rounded-3" onclick="alert('Tính năng đăng nhập bằng Facebook đang được phát triển!'); return false;">
                                     <i class="bi bi-facebook me-1"></i>Facebook
                                 </button>
                             </div>
