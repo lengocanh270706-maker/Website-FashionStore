@@ -85,14 +85,18 @@ if (isset($_GET['code'])) {
                 $stmt->close();
             }
 
-            // 4. Thiết lập Session đăng nhập
-            if (function_exists('loginUser')) {
-                loginUser($logged_in_user);
-            } else {
-                $_SESSION['user_id'] = $logged_in_user['id'];
-                $_SESSION['user_role'] = $logged_in_user['role'];
-                $_SESSION['user_name'] = $logged_in_user['name'];
-            }
+            // 4. Thiết lập Session đăng nhập chuẩn theo hệ thống dự án
+            $_SESSION['user'] = [
+                'id' => $logged_in_user['id'],
+                'name' => $logged_in_user['name'],
+                'email' => $logged_in_user['email'],
+                'phone' => $logged_in_user['phone'] ?? '',
+                'address' => $logged_in_user['address'] ?? '',
+                'avatar' => $logged_in_user['avatar'] ?? '',
+                'role' => $logged_in_user['role'] ?? 'user',
+                'dob' => $logged_in_user['dob'] ?? '',
+                'gender' => $logged_in_user['gender'] ?? ''
+            ];
 
             // 5. Điều hướng
             if ($logged_in_user['role'] === 'admin') {
