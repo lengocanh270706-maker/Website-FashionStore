@@ -257,7 +257,7 @@ require_once __DIR__ . '/../includes/menu.php';
                                         <i class="bi bi-x-circle"></i>Hết hàng
                                     </div>
                                 <?php endif; ?>
-                                <a href="detail.php?id=<?= (int)$product['id'] ?>" class="btn btn-dark w-100 mt-auto">
+                                <a href="product-detail.php?id=<?= (int)$product['id'] ?>" class="btn btn-dark w-100 mt-auto">
                                     <i class="bi bi-eye"></i>Xem chi tiết
                                 </a>
                             </div>
