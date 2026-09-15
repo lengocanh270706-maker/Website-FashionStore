@@ -447,3 +447,68 @@ th.text-center,td.text-center {text-align: center !important;vertical-align: mid
 footer{font-family:'Segoe UI',sans-serif}
 footer h1,footer h2,footer h3{font-family:'Segoe UI',sans-serif}
 footer p,footer a,footer li{font-size:16px}
+
+.input-group input[type="password"],
+.input-group input[type="text"] {
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-right: none !important;
+}
+
+.input-group #togglePassword,
+.input-group .change-password-toggle,
+.input-group button[type="button"] {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+    border-left: none !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+}
+
+.input-group:focus-within input {
+    border-color: #111 !important;
+    box-shadow: none !important;
+}
+
+.input-group:focus-within #togglePassword,
+.input-group:focus-within .change-password-toggle,
+.input-group:focus-within button[type="button"] {
+    border-color: #111 !important;
+    border-left: none !important;
+}
+
+@media (max-width: 991px) {
+    .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid #eee;
+        z-index: 1050;
+    }
+
+    .main-nav {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+        margin-bottom: 15px;
+    }
+
+    .navbar-actions {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 12px !important;
+        width: 100%;
+    }
+
+    .header-search {
+        width: 100% !important;
+    }
+}
