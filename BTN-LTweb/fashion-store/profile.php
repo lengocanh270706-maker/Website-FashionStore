@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!isset($allowed[$mime])) {
                 $error = 'Chỉ được upload ảnh JPG, PNG hoặc WEBP.';
             } else {
-                $uploadDir = __DIR__ . '/../assets/uploads/avatars/';
+                $uploadDir = __DIR__ . '/../uploads/avatars/';
                 if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
 
                 $fileName = 'avatar_' . $userId . '_' . time() . '.' . $allowed[$mime];
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $old = $stmt->get_result()->fetch_assoc();
 
         if (!empty($old['avatar'])) {
-            $file = __DIR__ . '/../assets/uploads/avatars/' . basename($old['avatar']);
+            $file = __DIR__ . '/../uploads/avatars/' . basename($old['avatar']);
             if (file_exists($file)) unlink($file);
         }
 
@@ -372,7 +372,6 @@ require_once __DIR__ . '/../includes/menu.php';
                 </div>
 
                 <div class="list-group list-group-flush">
-
                     <div class="list-group-item list-group-item-action p-4" data-bs-toggle="modal" data-bs-target="#comingSoonModal" style="cursor:pointer">
                         <div class="d-flex align-items-center gap-3">
                             <i class="bi bi-bell fs-5"></i>
@@ -416,7 +415,6 @@ require_once __DIR__ . '/../includes/menu.php';
                             <i class="bi bi-chevron-right text-muted"></i>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -448,6 +446,5 @@ require_once __DIR__ . '/../includes/menu.php';
         </div>
     </div>
 </div>
-
 
 <?php include '../includes/footer.php'; ?>
