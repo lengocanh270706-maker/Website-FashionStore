@@ -66,7 +66,7 @@ $result = $conn->query("SELECT * FROM users ORDER BY id DESC");
 </div>
 
             <!-- Main Content -->
-            <div class="col-md-10 main-content">
+            <div class="col-12 col-md-9 col-lg-10 main-content">
                 <!-- Topbar góc phải chứa thông tin Admin -->
                 <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded-4 shadow-sm">
                     <h4 class="fw-bold mb-0 text-dark">Quản lý người dùng</h4>
