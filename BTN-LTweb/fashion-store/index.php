@@ -151,50 +151,56 @@ const countdown=setInterval(()=>{
 <!-- BENEFITS -->
 <section class="benefits">
     <div class="container">
-        <div class="benefits-inner">
-            <div class="benefit-item">
-                <div class="benefit-icon">
-                    <i class="bi bi-truck"></i>
-                </div>
+        <div class="row g-0">
 
-                <div>
-                    <h3 class="benefit-title">MIỄN PHÍ GIAO HÀNG</h3>
-                    <p class="benefit-text">Đơn từ 300K</p>
+            <div class="col-6 col-md-3">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <div>
+                        <h3 class="benefit-title">MIỄN PHÍ GIAO HÀNG</h3>
+                        <p class="benefit-text">Đơn từ 300K</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="benefit-item">
-                <div class="benefit-icon">
-                    <i class="bi bi-arrow-counterclockwise"></i>
-                </div>
-
-                <div>
-                    <h3 class="benefit-title">ĐỔI TRẢ DỄ DÀNG</h3>
-                    <p class="benefit-text">Trong vòng 7 ngày</p>
-                </div>
-            </div>
-
-            <div class="benefit-item">
-                <div class="benefit-icon">
-                    <i class="bi bi-shield-check"></i>
-                </div>
-
-                <div>
-                    <h3 class="benefit-title">THANH TOÁN AN TOÀN</h3>
-                    <p class="benefit-text">100% bảo mật thông tin</p>
+            <div class="col-6 col-md-3">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </div>
+                    <div>
+                        <h3 class="benefit-title">ĐỔI TRẢ DỄ DÀNG</h3>
+                        <p class="benefit-text">Trong vòng 7 ngày</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="benefit-item">
-                <div class="benefit-icon">
-                    <i class="bi bi-headset"></i>
-                </div>
-
-                <div>
-                    <h3 class="benefit-title">HỖ TRỢ 24/7</h3>
-                    <p class="benefit-text">1900 1234</p>
+            <div class="col-6 col-md-3">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div>
+                        <h3 class="benefit-title">THANH TOÁN AN TOÀN</h3>
+                        <p class="benefit-text">100% bảo mật thông tin</p>
+                    </div>
                 </div>
             </div>
+
+            <div class="col-6 col-md-3">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="bi bi-headset"></i>
+                    </div>
+                    <div>
+                        <h3 class="benefit-title">HỖ TRỢ 24/7</h3>
+                        <p class="benefit-text">1900 1234</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
@@ -478,19 +484,33 @@ $posts=$conn->query("SELECT * FROM posts WHERE status=1 ORDER BY created_at DESC
 </section>
 
 <!-- NEWSLETTER -->
-<section class="newsletter">
+<section class="py-4">
     <div class="container">
-        <div class="newsletter-box">
-            <div class="newsletter-content">
+        <div class="row align-items-center p-4 p-md-5" style="background:#f5f0eb;">
+
+            <div class="col-12 col-md-6">
                 <p class="section-label">STAY CONNECTED</p>
                 <h2>NHẬN ƯU ĐÃI TỪ MÂY STORE</h2>
                 <p>Đăng ký email để nhận thông tin sản phẩm mới, bộ sưu tập và ưu đãi đặc biệt.</p>
             </div>
 
-            <form class="newsletter-form" action="#" method="POST">
-                <input type="email" name="email" placeholder="Nhập email của bạn..." required>
-                <button type="submit">ĐĂNG KÝ<i class="bi bi-arrow-right"></i></button>
-            </form>
+            <div class="col-12 col-md-6">
+                <form action="#" method="POST">
+                    <div class="d-flex align-items-center border-bottom">
+                        <input type="email"
+                               name="email"
+                               class="form-control border-0 bg-transparent"
+                               placeholder="Nhập email của bạn..."
+                               required>
+
+                        <button type="submit"
+                                class="btn border-0 bg-transparent text-nowrap">
+                            ĐĂNG KÝ <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 </section>
