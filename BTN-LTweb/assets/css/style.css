@@ -70,18 +70,6 @@ th.text-center,td.text-center {text-align: center !important;vertical-align: mid
 .news-content a{font-size:11px;letter-spacing:1px;color:#222;text-decoration:none}
 .news-content a:hover{color:#777}
 .news-content a i{margin-left:6px}
-.newsletter{padding:70px 0;background:#fff}
-.newsletter-box{display:flex;align-items:center;justify-content:space-between;gap:50px;padding:55px 65px;background:#f5f1eb}
-.newsletter-content{max-width:550px}
-.newsletter-content .section-label{margin-bottom:12px}
-.newsletter-content h2{margin:0 0 12px;font-family:'Playfair Display',serif;font-size:32px;line-height:1.2;color:#222}
-.newsletter-content>p:last-child{margin:0;color:#777;font-size:14px;line-height:1.7}
-.newsletter-form{display:flex;width:430px;border-bottom:1px solid #222}
-.newsletter-form input{flex:1;border:0;outline:0;background:transparent;padding:14px 5px;font-size:13px;color:#222}
-.newsletter-form input::placeholder{color:#999}
-.newsletter-form button{border:0;background:transparent;padding:14px 5px;font-size:11px;letter-spacing:1px;color:#222;cursor:pointer}
-.newsletter-form button:hover{color:#777}
-.newsletter-form button i{margin-left:8px}
 
 /* BENEFITS */
 .benefits{padding:30px 0;border-top:1px solid #eee;border-bottom:1px solid #eee}
