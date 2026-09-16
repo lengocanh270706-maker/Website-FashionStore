@@ -78,7 +78,7 @@ while ($r = $q->fetch_assoc()) $status_counts[$r['status']] = $r['count'];
     </div>
 </div>
 
-<div class="col-md-10 main-content">
+<div class="col-12 col-md-9 col-lg-10 main-content">
 
 <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded-4 shadow-sm">
     <h4 class="fw-bold mb-0">Thống kê doanh thu và báo cáo hệ thống</h4>
