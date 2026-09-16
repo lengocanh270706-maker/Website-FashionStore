@@ -35,11 +35,11 @@ if ($isLoggedIn) {
                 <span>Miễn phí vận chuyển cho đơn từ 300K</span>
             </div>
 
-            <div class="col-md-4  ">
+            <div class="col-12 col-md-4  ">
                 <span>Đổi trả dễ dàng trong 7 ngày</span>
             </div>
 
-            <div class="col-md-4  ">
+            <div class="col-12 col-md-4  ">
                 <span>
                     <i class="bi bi-telephone"></i>
                     Hotline: 1900 1234
@@ -52,7 +52,7 @@ if ($isLoggedIn) {
 
 <!-- MAIN NAVBAR -->
 <nav class="main-navbar navbar navbar-expand-lg">
-    <div class="navbar-container container-fluid">
+    <div class="navbar-container container-fluid d-flex flex-wrap">
         <div class="may-logo-wrapper d-flex align-items-center">
             <button class="navbar-toggler p-0 me-2" type="button"
                     data-bs-toggle="collapse"
@@ -70,9 +70,9 @@ if ($isLoggedIn) {
         </div>
 
         <!-- MENU -->
-        <div class="collapse navbar-collapse" id="mainMenu">
+        <div class="collapse navbar-collapse flex-column flex-lg-row" id="mainMenu">
             <!-- NAVIGATION -->
-            <div class="main-nav navbar-nav">
+            <div class="main-nav navbar-nav flex-column flex-lg-row w-100">
                 <a href="index.php" class="nav-item nav-link">Trang chủ</a>
                 <div class="dropdown">
                     <button class="nav-item nav-link dropdown-toggle" type="button"
@@ -90,9 +90,9 @@ if ($isLoggedIn) {
             </div>
 
             <!-- ACTIONS -->
-            <div class="navbar-actions ms-lg-auto">
+            <div class="navbar-actions ms-lg-auto d-flex flex-column flex-lg-row w-100">
                 <!-- SEARCH -->
-                <form action="search.php" method="GET" class="header-search">
+                <form action="search.php" method="GET" class="header-search w-100">
                     <input
                         type="text"
                         name="q"
